@@ -8,7 +8,7 @@ phases:
       Remove-Item -Force AWSCLI64PY3.msi; `
   build:
     commands:
-      aws —version 
+      aws --version 
 artifacts:
   files:
     - '**/*'
