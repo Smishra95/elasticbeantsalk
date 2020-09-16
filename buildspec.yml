@@ -39,7 +39,7 @@ phases:
 
   build:
     commands:
-      - "$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)"
+#       - "$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)"
       - "docker-compose -f api-testing-pipeline.yml up --build -d"
       - "docker exec -t test_api /usr/local/bin/wait-for-it.sh test_mysql:3306 -- php vendor/bin/codecept run Functional --steps --xml --coverage --coverage-xml"
 
@@ -47,12 +47,12 @@ phases:
     commands:
       - "docker cp test_api:/opt/api/tests/_output/report.xml ."
       - "docker cp test_api:/opt/api/tests/_output/coverage.xml ."
-reports:
-  test-report:
-    files:
-      - 'report.xml'
-    file-format: JunitXml
-  coverage-report:
-    files:
-      - 'coverage.xml'
-    file-format: CloverXmL
+# reports:
+#   test-report:
+#     files:
+#       - 'report.xml'
+#     file-format: JunitXml
+#   coverage-report:
+#     files:
+#       - 'coverage.xml'
+#     file-format: CloverXmL
