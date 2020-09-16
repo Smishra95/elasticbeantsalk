@@ -3,8 +3,8 @@ version: 0.2
 # In the future, use env/parameter-store
 # https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
 
-env:
-  parameter-store:
+# env:
+#   parameter-store:
 #     STRIPE_KEY: "/dev/voma/api/STRIPE_KEY"
 #     STRIPE_KEY_TEST: "/dev/voma/api/STRIPE_KEY_TEST"
 #     STRIPE_SECRET: "/dev/voma/api/STRIPE_SECRET"
