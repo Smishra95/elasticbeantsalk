@@ -18,7 +18,7 @@ phases:
     commands:
       - echo "Post build phase started"
       - mkdir artifacts
-      - cp scripts/* artifacts
+      - cp README.md/ artifacts
 #       - cp -r .next/ artifacts
 # 	  - cp -r node_modules/ artifacts
 #       - cp -r public/ artifacts
