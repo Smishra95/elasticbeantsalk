@@ -3,7 +3,7 @@ ersion: 0.2
 phases:
   install:
     commands:
-        - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+#         - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 #       - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
         - apt update && sudo apt install yarn
 
@@ -18,7 +18,7 @@ phases:
     commands:
       - echo "Post build phase started"
       - mkdir artifacts
-      - cp README.md/ artifacts
+      - cp -r .platform/* artifacts
 #       - cp -r .next/ artifacts
 # 	  - cp -r node_modules/ artifacts
 #       - cp -r public/ artifacts
