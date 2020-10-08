@@ -1,58 +1,34 @@
-version: 0.2
-
-# In the future, use env/parameter-store
-# https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
-
-# env:
-#   parameter-store:
-#     STRIPE_KEY: "/dev/voma/api/STRIPE_KEY"
-#     STRIPE_KEY_TEST: "/dev/voma/api/STRIPE_KEY_TEST"
-#     STRIPE_SECRET: "/dev/voma/api/STRIPE_SECRET"
-#     STRIPE_SECRET_TEST: "/dev/voma/api/STRIPE_SECRET_TEST"
-#     STRIPE_CLIENT_ID: "/dev/voma/api/STRIPE_CLIENT_ID"
-#     INFUSIONSOFT_CLIENT_ID: "/dev/voma/api/INFUSIONSOFT_CLIENT_ID"
-#     INFUSIONSOFT_SECRET: "/dev/voma/api/INFUSIONSOFT_SECRET"
-#     DRIP_CLIENT_ID: "/dev/voma/api/DRIP_CLIENT_ID"
-#     DRIP_CLIENT_SECRET: "/dev/voma/api/DRIP_CLIENT_SECRET"
-#     AWEBER_CLIENT_ID: "/dev/voma/api/AWEBER_CLIENT_ID"
-#     AWEBER_CLIENT_SECRET: "/dev/voma/api/AWEBER_CLIENT_SECRET"
-#     MAIL_USERNAME: "/dev/voma/api/MAIL_USERNAME"
-#     MAIL_PASSWORD: "/dev/voma/api/MAIL_PASSWORD"
-#     TAXJAR_API_KEY: "/dev/voma/api/TAXJAR_API_KEY"
-#     STRIPE_PRODUCT_BASE_URL: "/dev/voma/api/STRIPE_PRODUCT_BASE_URL"
-#     DRIP_ACCESS_TOKEN: "/test/voma/api/DRIP_ACCESS_TOKEN"
-#     DRIP_ACC_ID: "/test/voma/api/DRIP_ACC_ID"
-#     CONVERTKIT_API_KEY: "/test/voma/api/CONVERTKIT_API_KEY"
-#     CONVERTKIT_API_SECRET: "/test/voma/api/CONVERTKIT_API_SECRET"
-#     ACTIVE_CAMPAIGN_API_URL: "/test/voma/api/ACTIVE_CAMPAIGN_API_URL"
-#     ACTIVE_CAMPAIGN_API_KEY: "/test/voma/api/ACTIVE_CAMPAIGN_API_KEY"
+ersion: 0.2
 
 phases:
   install:
-    runtime-versions:
-      docker: 18
-      
-  pre_build:
     commands:
-      - "docker-compose -v"
-      - "ls -lah"
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+	  - apt update && sudo apt install yarn
 
   build:
     commands:
-      - "$(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)"
-      - "docker-compose -f api-testing-pipeline.yml up --build -d"
-      - "docker exec -t test_api /usr/local/bin/wait-for-it.sh test_mysql:3306 -- php vendor/bin/codecept run Functional --steps --xml --coverage --coverage-xml"
+      - echo Entered the build phase...
+      - echo Build started on `date`
+#       - sh scripts/buildProject.sh
+#       - uname -r > scripts/uname
 
   post_build:
     commands:
-      - "docker cp test_api:/opt/api/tests/_output/report.xml ."
-      - "docker cp test_api:/opt/api/tests/_output/coverage.xml ."
-reports:
-  test-report:
-    files:
-      - 'report.xml'
-    file-format: JunitXml
-  coverage-report:
-    files:
-      - 'coverage.xml'
-    file-format: CloverXmL
+      - echo "Post build phase started"
+      - mkdir artifacts
+      - cp scripts/* artifacts
+#       - cp -r .next/ artifacts
+# 	  - cp -r node_modules/ artifacts
+#       - cp -r public/ artifacts
+#       - cp .env artifacts 
+#       - cp package.json artifacts
+#       - cp next.config.js artifacts
+#       - cd artifacts
+#       - zip -r fmp-web-uk.zip .
+#       - aws s3 cp fmp-web-uk.zip s3://com-fmp-code-build-frontend-artifact/${FMP_ENV}/
+
+cache:
+  paths:
+    - 'node_modules/**/*'
