@@ -29,6 +29,6 @@ phases:
 #       - zip -r fmp-web-uk.zip .
 #       - aws s3 cp fmp-web-uk.zip s3://com-fmp-code-build-frontend-artifact/${FMP_ENV}/
 
-cache:
-  paths:
-    - 'node_modules/**/*'
+# cache:
+#   paths:
+#     - 'node_modules/**/*'
