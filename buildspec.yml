@@ -20,7 +20,7 @@ phases:
        - mkdir artifacts
        - cp -r .platform/ artifacts
        - cp -r .next/ artifacts
-    	  - cp -r node_modules/ artifacts
+    	  - cp -r .ebextensions/ artifacts
         - cp -r public/ artifacts
         - cp .env artifacts 
         - cp package.json artifacts
