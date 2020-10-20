@@ -3,32 +3,32 @@ version: 0.2
 phases:
   install:
     commands:
-#         - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-#       - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
- #       - apt update && sudo apt install yarn
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - apt update && sudo apt install yarn
 
   build:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-       - sh .ebextensions/buildProject.sh
-#       - uname -r > scripts/uname
+      - sh scripts/buildProject.sh
+      - uname -r > scripts/uname
 
   post_build:
     commands:
-       - echo "Post build phase started"
-       - mkdir artifacts
-#        - cp -r .platform/ artifacts
-#        - cp -r .next/ artifacts
-    	 - cp -r .ebextensions/ artifacts
-#        - cp -r public/ artifacts
-#        - cp .env artifacts 
-#        - cp package.json artifacts
-#        - cp next.config.js artifacts 
-       - cd artifacts
-       - zip -r fmp-web-uk.zip .
-#       - aws s3 cp fmp-web-uk.zip s3://com-fmp-code-build-frontend-artifact/${FMP_ENV}/
+      - echo "Post build phase started"
+      - mkdir artifacts
+      - cp scripts/* artifacts
+      - cp -r .next/ artifacts
+      - cp -r node_modules/ artifacts
+      - cp -r public/ artifacts
+      - cp .env artifacts 
+      - cp package.json artifacts
+      - cp next.config.js artifacts
+      - cd artifacts
+      - zip -r fmp-web-uk.zip .
+      - aws s3 cp fmp-web-uk.zip s3://com-fmp-code-build-frontend-artifact/${FMP_ENV}/
 
- cache:
-   paths:
-      - 'node_modules/**/*'
+cache:
+  paths:
+    - 'node_modules/**/*'
