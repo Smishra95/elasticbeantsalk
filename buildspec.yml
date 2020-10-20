@@ -9,18 +9,14 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - sh scripts/buildProject.sh
+      - sh .ebextensions/buildProject.sh
       - uname -r > scripts/uname
 
   post_build:
     commands:
       - echo "Post build phase started"
       - mkdir artifacts
-      - cp scripts/* artifacts
-      - cp -r .next/ artifacts
       - cp -r node_modules/ artifacts
-      - cp -r public/ artifacts
-      - cp .env artifacts 
       - cp package.json artifacts
       - cp next.config.js artifacts
       - cd artifacts
