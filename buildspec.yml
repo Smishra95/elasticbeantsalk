@@ -20,13 +20,13 @@ phases:
        - mkdir artifacts
        - cp -r .platform/ artifacts
        - cp -r .next/ artifacts
-    	  - cp -r .ebextensions/ artifacts
-        - cp -r public/ artifacts
-        - cp .env artifacts 
-        - cp package.json artifacts
-        - cp next.config.js artifacts 
-        - cd artifacts
-        - zip -r fmp-web-uk.zip .
+    	 - cp -r .ebextensions/ artifacts
+       - cp -r public/ artifacts
+       - cp .env artifacts 
+       - cp package.json artifacts
+       - cp next.config.js artifacts 
+       - cd artifacts
+       - zip -r fmp-web-uk.zip .
 #       - aws s3 cp fmp-web-uk.zip s3://com-fmp-code-build-frontend-artifact/${FMP_ENV}/
 
  cache:
