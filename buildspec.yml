@@ -9,15 +9,3 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - sh .ebextensions/buildProject.sh
-
-  post_build:
-    commands:
-      - echo "Post build phase started"
-      - mkdir artifacts
-      - cp -r node_modules/ artifacts
-      - cd artifacts
-
-cache:
-  paths:
-    - 'node_modules/**/*'
